@@ -14,12 +14,30 @@ const bucketMap = {
   [2]: [flashcard3]
 };
 
+/**
+ * ===================================================
+ * TESTING STRATEGY for toBucketSets()
+ * ---------------------------------------------------
+ * Partitions:
+ * - Card present in different difficulty buckets
+ * - Buckets with multiple or zero cards
+ * - All levels from -2 to 2 used
+ * ===================================================
+ */
+
 describe('toBucketSets', () => {
   it('should convert bucketMap to array of sets', () => {
+    const bucketMap = {
+      [-2]: [],
+      [-1]: [flashcard1],
+      [0]: [flashcard2],
+      [1]: [],
+      [2]: [flashcard3]
+    };
     const sets = toBucketSets([flashcard1, flashcard2, flashcard3], bucketMap);
-    expect(sets[0].has('1')).to.be.true;
-    expect(sets[1].has('2')).to.be.true;
-    expect(sets[3].has('3')).to.be.true;
+    expect(sets[1].has('1')).to.be.true;
+    expect(sets[2].has('2')).to.be.true;
+    expect(sets[4].has('3')).to.be.true;
   });
 });
 
