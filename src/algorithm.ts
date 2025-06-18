@@ -15,12 +15,12 @@ export function toBucketSets(cards: Flashcard[], bucketMap: BucketMap): Set<stri
 }
 
 export function getBucketRange(bucketSets: Set<string>[], cardId: string): [number, number] {
-  for (let i = 0; i < bucketSets.length; i++) {
-    if (bucketSets[i].has(cardId)) {
-      return [i, i];
+    for (let i = 0; i < bucketSets.length; i++) {
+        if (bucketSets[i].has(cardId)) {
+            return [i, i];
+        }
     }
-  }
-  return [0, bucketSets.length - 1];
+    return [0, bucketSets.length - 1];
 }
 
 export function practice(cards: Flashcard[], bucketMap: BucketMap): Flashcard | undefined {
