@@ -29,3 +29,8 @@ Each card is stored in a `BucketMap` based on its difficulty.
 - `getHint(card)`: Returns a truncated hint from the answer.
 - `computeProgress(bucketMap)`: Calculates percentage of cards that are mastered.
 
+## Project Running Process
+### install node modules
+- npm install
+### Run the tests by command
+- npm test
