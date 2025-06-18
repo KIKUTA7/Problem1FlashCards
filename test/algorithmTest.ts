@@ -149,8 +149,32 @@ describe('getHint', () => {
   });
 });
 
+/**
+ * ===================================================
+ * TESTING STRATEGY for computeProgress()
+ * ---------------------------------------------------
+ * Partitions:
+ * 1. Card distribution:
+ *    - All cards mastered
+ *    - No cards mastered
+ *    - Mixed mastery
+ * 2. Edge cases:
+ *    - No cards (should throw)
+ *    - All cards in retired bucket
+ * 3. Calculation accuracy:
+ *    - Fractions
+ *    - Rounding
+ * ===================================================
+ */
 describe('computeProgress', () => {
   it('should compute correct progress', () => {
+    const bucketMap = {
+      [-2]: [flashcard1],
+      [-1]: [],
+      [0]: [flashcard2],
+      [1]: [],
+      [2]: [flashcard3]
+    };
     expect(computeProgress(bucketMap)).to.equal(33);
   });
 
@@ -158,8 +182,40 @@ describe('computeProgress', () => {
     const emptyMap = { [-2]: [], [-1]: [], [0]: [], [1]: [], [2]: [] };
     expect(computeProgress(emptyMap)).to.equal(100);
   });
-});
 
+  it('should return 0 if no cards mastered', () => {
+    const bucketMap = {
+      [-2]: [],
+      [-1]: [],
+      [0]: [flashcard2],
+      [1]: [flashcard3],
+      [2]: [flashcard1]
+    };
+    expect(computeProgress(bucketMap)).to.equal(0);
+  });
+
+  it('should return 100 if all cards mastered', () => {
+    const bucketMap = {
+      [-2]: [flashcard1, flashcard2, flashcard3],
+      [-1]: [],
+      [0]: [],
+      [1]: [],
+      [2]: []
+    };
+    expect(computeProgress(bucketMap)).to.equal(100);
+  });
+
+  it('should round down correctly', () => {
+    const bucketMap = {
+      [-2]: [flashcard1],
+      [-1]: [flashcard2],
+      [0]: [],
+      [1]: [],
+      [2]: [flashcard3]
+    };
+    expect(computeProgress(bucketMap)).to.equal(33);
+  });
+});
 
 
 
