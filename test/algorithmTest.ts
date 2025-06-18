@@ -3,7 +3,7 @@ import { toBucketSets, getBucketRange, practice, update, getHint, computeProgres
 import { AnswerDifficulty, Flashcard } from '../src/flashcards';
 
 const flashcard1: Flashcard = { id: '1', question: 'Q1', answer: 'A1' };
-const flashcard2: Flashcard = { id: '2', question: 'Q2', answer: 'A2 A3 A4' };
+const flashcard2: Flashcard = { id: '2', question: 'Q2', answer: 'A2 A3 A4 A5 A7' };
 const flashcard3: Flashcard = { id: '3', question: 'Q3', answer: 'A3' };
 
 const bucketMap = {
@@ -143,9 +143,9 @@ describe('getHint', () => {
   it('should return full answer if <=10 characters', () => {
     expect(getHint(flashcard3)).to.equal('A3');
   });
-  console.log(getHint(flashcard2));
+
   it('should return shortened hint if >10 characters', () => {
-    expect(getHint(flashcard2)).to.equal('A2 A3 A4...');
+    expect(getHint(flashcard2)).to.equal('A2 A3 A4 A...');
   });
 });
 

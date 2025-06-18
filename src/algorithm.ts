@@ -47,9 +47,10 @@ export function update(card: Flashcard, difficulty: AnswerDifficulty, bucketMap:
 export function getHint(card: Flashcard): string {
     const MAX_HINT_LENGTH = 10;
     if (card.answer.length <= MAX_HINT_LENGTH) {
+        console.log(card.answer);
         return card.answer;
     }
-    return card.answer.slice(0, MAX_HINT_LENGTH) + '...';
+    return card.answer.slice(0, MAX_HINT_LENGTH).concat('...');
 }
 
 export function computeProgress(bucketMap: BucketMap): number {
