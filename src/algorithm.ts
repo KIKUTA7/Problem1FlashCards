@@ -5,12 +5,13 @@ export function toBucketSets(cards: Flashcard[], bucketMap: BucketMap): Set<stri
     new Set<string>(),
     new Set<string>(),
     new Set<string>(),
-    new Set<string>()
+    new Set<string>(),
+    new Set<string>(),
   ];
 
-  for (const level of [-1, 0, 1, 2] as AnswerDifficulty[]) {
+  for (const level of [-2,-1, 0, 1, 2] as AnswerDifficulty[]) {
     const bucket = bucketMap[level];
-    const setIndex = level + 1;
+    const setIndex = level + 2;
     for (const card of bucket) {
       sets[setIndex].add(card.id);
     }
@@ -29,7 +30,7 @@ export function getBucketRange(bucketSets: Set<string>[], cardId: string): [numb
 }
 
 export function practice(cards: Flashcard[], bucketMap: BucketMap): Flashcard | undefined {
-  for (const level of [-1, 0, 1, 2] as AnswerDifficulty[]) {
+  for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
     const bucket = bucketMap[level];
     if (bucket.length > 0) {
       return bucket[0];
@@ -39,7 +40,7 @@ export function practice(cards: Flashcard[], bucketMap: BucketMap): Flashcard | 
 }
 
 export function update(card: Flashcard, difficulty: AnswerDifficulty, bucketMap: BucketMap): void {
-  for (const level of [-1, 0, 1, 2] as AnswerDifficulty[]) {
+  for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
     bucketMap[level] = bucketMap[level].filter(c => c.id !== card.id);
   }
   bucketMap[difficulty].push(card);
