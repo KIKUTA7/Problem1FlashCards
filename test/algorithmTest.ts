@@ -79,9 +79,30 @@ describe('getBucketRange', () => {
   });
 });
 
+/**
+ * ===================================================
+ * TESTING STRATEGY for practice()
+ * ---------------------------------------------------
+ * Partitions:
+ * - Cards in higher priority buckets
+ * - No cards in any bucket
+ * ===================================================
+ */
 describe('practice', () => {
-  it('should return first card found', () => {
-    expect(practice([], bucketMap)).to.deep.equal(flashcard1);
+  it('should return first card in highest priority bucket', () => {
+    const bucketMap = {
+      [-2]: [],
+      [-1]: [flashcard1],
+      [0]: [flashcard2],
+      [1]: [],
+      [2]: [flashcard3]
+    };
+    expect(practice([flashcard1, flashcard2, flashcard3], bucketMap)).to.deep.equal(flashcard3);
+  });
+
+  it('should return undefined if no cards', () => {
+    const emptyMap = { [-2]: [], [-1]: [], [0]: [], [1]: [], [2]: [] };
+    expect(practice([], emptyMap)).to.equal(undefined);
   });
 });
 
