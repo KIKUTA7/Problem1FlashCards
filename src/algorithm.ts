@@ -24,37 +24,42 @@ export function getBucketRange(bucketSets: Set<string>[], cardId: string): [numb
 }
 
 export function practice(cards: Flashcard[], bucketMap: BucketMap): Flashcard | undefined {
-  for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
-    const bucket = bucketMap[level];
-    if (bucket.length > 0) {
-      return bucket[0];
+    for (const level of [2, 1, 0, -1, -2] as AnswerDifficulty[]) {
+        const bucket = bucketMap[level];
+        if (bucket.length > 0) {
+            return bucket[0];
+        }
     }
-  }
-  return undefined;
+    return undefined;
 }
 
 export function update(card: Flashcard, difficulty: AnswerDifficulty, bucketMap: BucketMap): void {
-  for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
-    bucketMap[level] = bucketMap[level].filter(c => c.id !== card.id);
-  }
-  bucketMap[difficulty].push(card);
+    for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
+        bucketMap[level] = bucketMap[level].filter(c => c.id !== card.id);
+    }
+    bucketMap[difficulty].push(card);
 }
 
 export function getHint(card: Flashcard): string {
-  const words = card.answer.split(' ');
-  if (words.length <= 2) {
-    return card.answer;
-  }
-  return words.slice(0, 2).join(' ') + '...';
+    const MAX_HINT_LENGTH = 10;
+    if (card.answer.length <= MAX_HINT_LENGTH) {
+        return card.answer;
+    }
+    return card.answer.slice(0, MAX_HINT_LENGTH) + '...';
 }
 
 export function computeProgress(bucketMap: BucketMap): number {
-  const totalCards = Object.values(bucketMap).reduce((sum, bucket) => sum + bucket.length, 0);
-  if (totalCards === 0) {
-    return 100;
-  }
-  const masteredCards = bucketMap[AnswerDifficulty.Mastered].length;
-  return Math.floor((masteredCards / totalCards) * 100);
+    let totalCards = 0;
+    for (const level of [-2, -1, 0, 1, 2]) {
+        totalCards += bucketMap[level as AnswerDifficulty].length;
+    }
+    
+    if (totalCards === 0) {
+        return 100;
+    }
+    
+    const masteredCards = bucketMap[AnswerDifficulty.Mastered].length;
+    return Math.floor((masteredCards / totalCards) * 100);
 }
 
 
