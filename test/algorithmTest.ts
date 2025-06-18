@@ -7,6 +7,7 @@ const flashcard2: Flashcard = { id: '2', question: 'Q2', answer: 'A2 A3 A4' };
 const flashcard3: Flashcard = { id: '3', question: 'Q3', answer: 'A3' };
 
 const bucketMap = {
+  [-2]: [flashcard1],
   [-1]: [flashcard1],
   [0]: [flashcard2],
   [1]: [],

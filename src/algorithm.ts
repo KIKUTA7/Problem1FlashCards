@@ -1,23 +1,17 @@
 import { Flashcard, AnswerDifficulty, BucketMap } from './flashcards';
 
 export function toBucketSets(cards: Flashcard[], bucketMap: BucketMap): Set<string>[] {
-  const sets: Set<string>[] = [
-    new Set<string>(),
-    new Set<string>(),
-    new Set<string>(),
-    new Set<string>(),
-    new Set<string>(),
-  ];
-
-  for (const level of [-2,-1, 0, 1, 2] as AnswerDifficulty[]) {
-    const bucket = bucketMap[level];
-    const setIndex = level + 2;
-    for (const card of bucket) {
-      sets[setIndex].add(card.id);
+    const sets: Set<string>[] = Array.from({ length: 5 }, () => new Set<string>());
+    
+    for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
+        const bucket = bucketMap[level];
+        const setIndex = level + 2;
+        for (const card of bucket) {
+            sets[setIndex].add(card.id);
+        }
     }
-  }
-
-  return sets;
+    
+    return sets;
 }
 
 export function getBucketRange(bucketSets: Set<string>[], cardId: string): [number, number] {
