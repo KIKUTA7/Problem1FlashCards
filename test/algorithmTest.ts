@@ -7,7 +7,7 @@ const flashcard2: Flashcard = { id: '2', question: 'Q2', answer: 'A2 A3 A4' };
 const flashcard3: Flashcard = { id: '3', question: 'Q3', answer: 'A3' };
 
 const bucketMap = {
-  [-2]: [flashcard1],
+  [-2]: [],
   [-1]: [flashcard1],
   [0]: [flashcard2],
   [1]: [],
@@ -67,7 +67,7 @@ describe('computeProgress', () => {
   });
 
   it('should return 100 if no cards', () => {
-    const emptyMap = { [-1]: [], [0]: [], [1]: [], [2]: [] };
+    const emptyMap = { [-2]: [], [-1]: [], [0]: [], [1]: [], [2]: [] };
     expect(computeProgress(emptyMap)).to.equal(100);
   });
 });
