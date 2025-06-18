@@ -5,10 +5,11 @@ export interface Flashcard {
 }
 
 export enum AnswerDifficulty {
-  Wrong = -1,
-  Unknown = 0,
-  Right = 1,
-  Mastered = 2
+  Easiest = -2,
+  Easy = -1,
+  Medium = 0,
+  Hard = 1,
+  Hardest = 2
 }
 
 export type BucketMap = {
