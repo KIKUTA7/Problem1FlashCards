@@ -35,7 +35,11 @@ export function practice(cards: Flashcard[], bucketMap: BucketMap): Flashcard | 
 
 export function update(card: Flashcard, difficulty: AnswerDifficulty, bucketMap: BucketMap): void {
     for (const level of [-2, -1, 0, 1, 2] as AnswerDifficulty[]) {
-        bucketMap[level] = bucketMap[level].filter(c => c.id !== card.id);
+        const index = bucketMap[level].findIndex(c => c.id === card.id);
+        if (index !== -1) {
+            bucketMap[level].splice(index, 1);
+            break;
+        }
     }
     bucketMap[difficulty].push(card);
 }

@@ -106,21 +106,46 @@ describe('practice', () => {
   });
 });
 
+/**
+ * ===================================================
+ * TESTING STRATEGY for update()
+ * ---------------------------------------------------
+ * Partitions:
+ * - Card moved from one bucket to another
+ * - Card added to new bucket if not previously present
+ * ===================================================
+ */
 describe('update', () => {
   it('should update card difficulty', () => {
-    const mapCopy = JSON.parse(JSON.stringify(bucketMap));
-    update(flashcard1, AnswerDifficulty.Mastered, mapCopy);
-    expect(mapCopy[2].some((c: Flashcard) => c.id === '1')).to.be.true;
+    const bucketMap = {
+      [-2]: [],
+      [-1]: [flashcard1],
+      [0]: [flashcard2],
+      [1]: [],
+      [2]: [flashcard3]
+    };
+    update(flashcard1, AnswerDifficulty.Mastered, bucketMap);
+    expect(bucketMap[-2].some((c: Flashcard) => c.id === '1')).to.be.true;
+    expect(bucketMap[-1].some((c: Flashcard) => c.id === '1')).to.be.false;
   });
 });
 
+/**
+ * ===================================================
+ * TESTING STRATEGY for getHint()
+ * ---------------------------------------------------
+ * Partitions:
+ * - Answer <= MAX_HINT_LENGTH
+ * - Answer > MAX_HINT_LENGTH
+ * ===================================================
+ */
 describe('getHint', () => {
-  it('should return full answer if <=2 words', () => {
+  it('should return full answer if <=10 characters', () => {
     expect(getHint(flashcard3)).to.equal('A3');
   });
-
-  it('should return shortened hint if >2 words', () => {
-    expect(getHint(flashcard2)).to.equal('A2 A3...');
+  console.log(getHint(flashcard2));
+  it('should return shortened hint if >10 characters', () => {
+    expect(getHint(flashcard2)).to.equal('A2 A3 A4...');
   });
 });
 
