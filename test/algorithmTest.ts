@@ -41,17 +41,41 @@ describe('toBucketSets', () => {
   });
 });
 
+/**
+ * ===================================================
+ * TESTING STRATEGY for getBucketRange()
+ * ---------------------------------------------------
+ * Partitions:
+ * - Card ID found in specific set
+ * - Card ID not found at all
+ * - Empty sets
+ * ===================================================
+ */
 describe('getBucketRange', () => {
   it('should return range containing cardId', () => {
+    const bucketMap = {
+      [-2]: [],
+      [-1]: [flashcard1],
+      [0]: [flashcard2],
+      [1]: [],
+      [2]: [flashcard3]
+    };
     const sets = toBucketSets([flashcard1, flashcard2, flashcard3], bucketMap);
     const range = getBucketRange(sets, '2');
-    expect(range).to.deep.equal([1, 1]);
+    expect(range).to.deep.equal([2, 2]);
   });
 
   it('should return full range if card not found', () => {
+    const bucketMap = {
+      [-2]: [],
+      [-1]: [flashcard1],
+      [0]: [flashcard2],
+      [1]: [],
+      [2]: [flashcard3]
+    };
     const sets = toBucketSets([flashcard1, flashcard2, flashcard3], bucketMap);
     const range = getBucketRange(sets, '999');
-    expect(range).to.deep.equal([0, 3]);
+    expect(range).to.deep.equal([0, 4]);
   });
 });
 
